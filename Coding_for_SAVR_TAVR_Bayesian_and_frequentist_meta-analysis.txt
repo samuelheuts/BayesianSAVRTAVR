@@ -1,0 +1,176 @@
+This is the code to reproduce the analysis of the study: 
+
+Bayesian interpretation of non-inferiority in transcatheter versus surgical aortic valve replacement trials: a systematic review and meta-analysis
+
+By:
+
+Samuel Heuts, MD, PhD, Michal Kawczynski, MD, Peyman Sardari Nia, MD, PhD, Jos G. Maessen, MD, PhD, Giuseppe Biondi-Zoccai, Andrea Gabrio, PhD
+
+CODING FOR BAYESIAN META-ANALYSIS IN JASP 0.17.3
+
+JASP does not yet possess an R-code export for the Bayesian analysis. Therefore the settings for the analyses are outlined below. When JASP is updated to export R-codes, this manual will be adapted accordingly.
+
+Module for all: Bayesian meta-analysis in JASP
+
+Log RR per study for 5-year all-cause mortality:
+			Mean log RR		lower bound 95% CI	upper bound 95% CI
+PARTNER 1		0.15404		0.03490		0.27317
+PARTNER 2		0.17398		0.06614		0.28183
+CoreValve		0.03722		-0.09997		0.17441
+SURTAVI		0.11277		-0.04770		0.27322
+NOTION		-0.03590		-0.42540		0.35350
+
+Analyses (all on log RR scale):
+- Model: model averaging
+- Bayes Factor: BF10
+- Forest plot: observed
+- Order: row order
+- Prior effect size: vague (normal; ?=0, ?=2), Cauchy (location=0, scale=0.707), informed (normal; ?=0.324, ?=0.045)
+- Heterogeneity: Inverse gamma; shape=1, scale=0.15
+- Estimation settings MCMC: samples=10000, chains=4
+
+Log RR per study for 2-year all-cause mortality:
+			Mean log RR		lower bound 95% CI	upper bound 95% CI
+PARTNER 1		0.02600		-0.18570		0.23700
+PARTNER 2		-0.01400		-0.20940		0.18140
+PARTNER 3		-0.24260		-1.00300		0.51780
+CoreValve		-0.23790		-0.48970		0.01410
+SURTAVI		0.01330		-0.23970		0.26440
+EVOLUT LR		-0.39230		-0.84210		0.05760
+
+Analyses (all on log RR scale):
+- Model: model averaging
+- Bayes Factor: BF10
+- Forest plot: observed
+- Order: row order
+- Prior effect size: vague (normal; ?=0, ?=2)
+- Heterogeneity: Inverse gamma; shape=1, scale=0.15
+- Estimation settings MCMC: samples=10000, chains=4
+
+
+
+Log RR per study for 1-year all-cause mortality
+
+			Mean log RR		lower bound 95% CI	upper bound 95% CI
+PARTNER 1		-0.04920		-0.30790		0.20950
+PARTNER 2		0.00200		-0.23190		0.23610
+PARTNER 3		-0.87680		-1.92620		0.17250
+CoreValve		-0.28280		-0.60940		0.04380
+SURTAVI		0.02340		-0.33140		0.37820
+EVOLUT LR		-0.15420		-0.77540		0.46710
+NOTION		-0.38580		-1.32240		0.55050
+UK TAVI		-0.36540		-0.90780		0.17690
+
+Analyses (all on log RR scale):
+- Model: model averaging
+- Bayes Factor: BF10
+- Forest plot: observed
+- Order: row order
+- Prior effect size: vague (normal; ?=0, ?=2)
+- Heterogeneity: Inverse gamma; shape=1, scale=0.15
+- Estimation settings MCMC: samples=10000, chains=4
+
+CODING FOR FREQUENTIST AND IPD-KM META-ANALYSIS IN R
+
+(survival)
+library(rstpm2)
+library(meta)
+
+Kaplan Meier analysis for different timepoint
+fit <- coxph(Surv(time, status) ~ strata, data = IPD12)
+fit <- coxph(Surv(time1, status) ~ strata, data = IPD40)
+fit <- coxph(Surv(time, status) ~ strata, data = IPD60)
+fit <- coxph(Surv(time, status) ~ strata, data = IPD)
+
+fit <- survfit(Surv(time, status) ~ strata, data = IPD12)
+fit <- survfit(Surv(time1, status) ~ strata, data = IPD40)
+fit <- survfit(Surv(time, status) ~ strata, data = IPD60)
+fit <- survfit(Surv(time, status) ~ strata, data = IPD)
+
+Hazard plot
+ggsurvplot(fit, data = IPD12, risk.table = TRUE, fun = "cumhaz", pval = FALSE, xlim = c(0,60), ylim = c(0,0.3), break.time.by = 12, censor = FALSE, conf.int = TRUE, palette = "jama", legend.title = "Surgery", legend.labs = c("SAVR", "TAVR"), break.x.by = 12, xlab = "Time in months", fontsize = 5, risk.table.height = 0.35, font.main = c(15, "bold"), font.legend = c(12, "bold"))
+
+ggsurvplot(fit, data = IPD40, risk.table = TRUE, fun = "cumhaz", pval = FALSE, xlim = c(0,60), ylim = c(0,0.3), break.time.by = 12, censor = FALSE, conf.int = TRUE, palette = "jama", legend.title = "Surgery", legend.labs = c("SAVR", "TAVR"), break.x.by = 12, xlab = "Time in months", fontsize = 5, risk.table.height = 0.35, font.main = c(15, "bold"), font.legend = c(12, "bold"))
+
+ggsurvplot(fit, data = IPD60, risk.table = TRUE, fun = "cumhaz", pval = FALSE, xlim = c(0,60), ylim = c(0,0.3), break.time.by = 12, censor = FALSE, conf.int = TRUE, palette = "jama", legend.title = "Surgery", legend.labs = c("SAVR", "TAVR"), break.x.by = 12, xlab = "Time in months", fontsize = 5, risk.table.height = 0.35, font.main = c(15, "bold"), font.legend = c(12, "bold"))
+
+ggsurvplot(fit, data = IPD, risk.table = TRUE, pval = FALSE, xlim = c(0,60), ylim = c(0.5,1), break.time.by = 12, censor = FALSE, conf.int = TRUE, palette = "jama", legend.title = "Surgery", legend.labs = c("SAVR", "TAVR"), break.x.by = 12, xlab = "Time in months", fontsize = 5, risk.table.height = 0.35, font.main = c(15, "bold"), font.legend = c(12, "bold"))
+
+Schoenfeld residuals plot
+result.coxph <- coxph(Surv(time, status) ~ strata, data=IPD)
+result.sch.resid <- cox.zph(result.coxph, transform="km")
+result.sch.resid <- cox.zph(result.coxph, transform="rank")
+result.sch.resid <- cox.zph(result.coxph, transform="identity")
+plot(result.sch.resid, ylim=c(-0.5,0.5))
+cox.zph(result.coxph, transform="km")
+
+Time dependent HR analysis
+fit <- stpm2(Surv(time,status==1)~strata, data=IPD, df=6, tvc=list(strata=2))
+
+plot(fit, newdata=data.frame(strata=1), xlab= "Time in months")
+lines(fit, newdata=data.frame(strata=2), lty=2)
+legend("topright", c("SAVR","TAVR"),
+lty=1:2, col=c("black","black"))
+
+plot(fit,newdata=data.frame(strata=1), type="hazard", 
+xlab=" Time in months", ylim=c(0,0.06)) 
+lines(fit, newdata=data.frame(strata=2), lty=2, col=2, type="hazard") 
+main="SAVR compared to TAVI" 
+legend("topright", c("SAVR","TAVR"),lty=1:2,col=1:2,bty="n")
+
+plot(fit,newdata=data.frame(strata=1), type="hr", var="strata",
+xlab="Time in months", ylim=c(0.5,1.5))
+abline(h=1, col="blue")
+
+plot(fit,newdata=data.frame(strata=2), type="hdiff", 
+exposed=function(data) transform(data, strata=1), 
+main="SAVR compared to TAVI", 
+xlab="Time in months")
+abline(h=0, col="blue")
+
+plot(fit,newdata=data.frame(strata=2), type="sdiff", 
+exposed=function(data) transform(data, strata=1), 
+main="SAVR compared to TAVI", 
+xlab="Time in months")
+abline(h=0, col="blue")
+
+
+Frequentist meta + publication bias
+
+DerSimonian
+
+m <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "DL")
+
+publication_bias1 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "DL", method.bias = "Egger")
+publication_bias2 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "DL", method.bias = "Begg")
+publication_bias3 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "DL", method.bias = "Thompson")
+
+funnel(publication_bias1)
+
+metabias(publication_bias1, method.bias = publication_bias1$method.bias, k.min=5)
+metabias(publication_bias2, method.bias = publication_bias2$method.bias, k.min=5)
+metabias(publication_bias3, method.bias = publication_bias3$method.bias, k.min=5)
+
+trimfill(publication_bias1)
+
+funnel(trimfill(publication_bias1))
+
+
+Sidik Jonkman
+
+m1 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "SJ")
+
+publication_bias1 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "SJ", method.bias = "Egger")
+publication_bias2 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "SJ", method.bias = "Begg")
+publication_bias3 <- metabin(event.e, n.e, event.c, n.c, data = tavr, studlab = study, sm = "RR", method = "Inverse", method.tau = "SJ", method.bias = "Thompson")
+
+funnel(publication_bias1)
+
+metabias(publication_bias1, method.bias = publication_bias1$method.bias, k.min=5)
+metabias(publication_bias2, method.bias = publication_bias2$method.bias, k.min=5)
+metabias(publication_bias3, method.bias = publication_bias3$method.bias, k.min=5)
+
+
+trimfill(publication_bias1)
+
+funnel(trimfill(publication_bias1))
