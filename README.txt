@@ -1,6 +1,6 @@
 This is the code to reproduce the analysis of the study: 
 
-Bayesian interpretation of non-inferiority in transcatheter versus surgical aortic valve replacement trials: a systematic review and Bayesian meta-analysis
+Bayesian interpretation of non-inferiority in transcatheter versus surgical aortic valve replacement trials: a systematic review and meta-analysis
 
 By:
 
