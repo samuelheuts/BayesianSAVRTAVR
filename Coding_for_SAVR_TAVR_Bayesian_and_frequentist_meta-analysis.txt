@@ -14,11 +14,11 @@ Module for all: Bayesian meta-analysis in JASP
 
 Log RR per study for 5-year all-cause mortality:
 			Mean log RR		lower bound 95% CI	upper bound 95% CI
-PARTNER 1		0.15404		0.03490		0.27317
-PARTNER 2		0.17398		0.06614		0.28183
-CoreValve		0.03722		-0.09997		0.17441
-SURTAVI		0.11277		-0.04770		0.27322
-NOTION		-0.03590		-0.42540		0.35350
+PARTNER 1		0.15404			0.03490			0.27317
+PARTNER 2		0.17398			0.06614			0.28183
+CoreValve		0.03722			-0.09997		0.17441
+SURTAVI			0.11277			-0.04770		0.27322
+NOTION			-0.03590		-0.42540		0.35350
 
 Analyses (all on log RR scale):
 - Model: model averaging
@@ -31,11 +31,11 @@ Analyses (all on log RR scale):
 
 Log RR per study for 2-year all-cause mortality:
 			Mean log RR		lower bound 95% CI	upper bound 95% CI
-PARTNER 1		0.02600		-0.18570		0.23700
+PARTNER 1		0.02600			-0.18570		0.23700
 PARTNER 2		-0.01400		-0.20940		0.18140
 PARTNER 3		-0.24260		-1.00300		0.51780
 CoreValve		-0.23790		-0.48970		0.01410
-SURTAVI		0.01330		-0.23970		0.26440
+SURTAVI			0.01330			-0.23970		0.26440
 EVOLUT LR		-0.39230		-0.84210		0.05760
 
 Analyses (all on log RR scale):
@@ -53,13 +53,13 @@ Log RR per study for 1-year all-cause mortality
 
 			Mean log RR		lower bound 95% CI	upper bound 95% CI
 PARTNER 1		-0.04920		-0.30790		0.20950
-PARTNER 2		0.00200		-0.23190		0.23610
+PARTNER 2		0.00200			-0.23190		0.23610
 PARTNER 3		-0.87680		-1.92620		0.17250
 CoreValve		-0.28280		-0.60940		0.04380
-SURTAVI		0.02340		-0.33140		0.37820
+SURTAVI			0.02340			-0.33140		0.37820
 EVOLUT LR		-0.15420		-0.77540		0.46710
-NOTION		-0.38580		-1.32240		0.55050
-UK TAVI		-0.36540		-0.90780		0.17690
+NOTION			-0.38580		-1.32240		0.55050
+UK TAVI			-0.36540		-0.90780		0.17690
 
 Analyses (all on log RR scale):
 - Model: model averaging
