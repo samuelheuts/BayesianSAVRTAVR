@@ -6,7 +6,13 @@ By:
 
 Samuel Heuts, MD, PhD, Michal Kawczynski, MD, Peyman Sardari Nia, MD, PhD, Jos G. Maessen, MD, PhD, Giuseppe Biondi-Zoccai, Andrea Gabrio, PhD
 
-CODING FOR BAYESIAN META-ANALYSIS IN JASP 0.17.3
+In:
+Interdisciplinary CardioVascular and Thoracic Surgery, ivad185, https://doi.org/10.1093/icvts/ivad185
+
+Published:
+November 20th, 2023
+
+CODING FOR BAYESIAN META-ANALYSIS IN JASP 0.17.3 (Intel for Mac), Amsterdam University, Amsterdam, the Netherlands
 
 JASP does not yet possess an R-code export for the Bayesian analysis. Therefore the settings for the analyses are outlined below. When JASP is updated to export R-codes, this manual will be adapted accordingly.
 
@@ -16,6 +22,7 @@ Log RR per study for 5-year all-cause mortality:
 			Mean log RR		lower bound 95% CI	upper bound 95% CI
 PARTNER 1		0.15404			0.03490			0.27317
 PARTNER 2		0.17398			0.06614			0.28183
+PARTNER 3		0.25630			-0.16300		0.67690
 CoreValve		0.03722			-0.09997		0.17441
 SURTAVI			0.11277			-0.04770		0.27322
 NOTION			-0.03590		-0.42540		0.35350
